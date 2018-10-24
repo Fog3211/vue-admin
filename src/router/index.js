@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/views/Login'
+import NotFound from '@/views/404'
 import Home from '@/views/Home'
 import Test from '@/views/Test'
 import Charts from '@/views/charts/Charts'
@@ -14,25 +15,25 @@ export default new Router({
       component: Login
     },
     {
-      path:'/home',
-      component:Home,
-      name:'主页'
+      path: '/404',
+      component: NotFound,
+      name: 'NotFound',
     },
     {
-      path:'/test',
-      component:Test,
-      name:'Test'
+      path: '/home',
+      component: Home,
+      name: '主页'
     },
-    // {
-    //   path: '/',
-    //   component: Home,
-    //   name: '导航四',
-    //   iconCls: 'fa fa-bar-chart',
-    //   children: [{
-    //     path: '/charts',
-    //     component: Charts,
-    //     name: 'Charts'
-    //   }]
-    // },
+    {
+      path: '/test',
+      component: Test,
+      name: 'Test'
+    },
+    {
+      path: '*',
+      redirect: {
+        path: '/404'
+      }
+    }
   ]
 })
