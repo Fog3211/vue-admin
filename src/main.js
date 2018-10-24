@@ -6,8 +6,11 @@ import router from './router'
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-
+import 'font-awesome/scss/font-awesome.scss'
 import Mock from './mock/mock'
+import 'normalize.css'
+import 'babel-polyfill'
+
 Mock.mockRequest(); 
 
 

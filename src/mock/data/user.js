@@ -3,6 +3,8 @@ const LoginUsers = [{
   id: 1,
   username: 'admin',
   password: '123456',
+  avatar: '../../../static/head.gif',
+  name: '管理员大大'
 }];
 
 const Users = [];
