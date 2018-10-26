@@ -12,12 +12,14 @@ export default new Router({
   routes: [{
       path: '/login',
       name: 'Login',
-      component: Login
+      component: Login,
+      hidden: true
     },
     {
       path: '/404',
       component: NotFound,
       name: 'NotFound',
+      hidden: true
     },
     {
       path: '/home',
@@ -30,10 +32,22 @@ export default new Router({
       name: 'Test'
     },
     {
+      path: '/',
+      component: Home,
+      name: 'Charts',
+      iconCls: 'fa fa-bar-chart',
+      children: [{
+        path: '/charts',
+        component: Charts,
+        name: 'Charts'
+      }]
+    },
+    {
       path: '*',
       redirect: {
         path: '/404'
-      }
+      },
+      hidden: true
     }
   ]
 })

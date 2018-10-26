@@ -37,6 +37,7 @@ export default {
       });
     });
 
+
     //获取用户列表
     mock.onGet('/user/list').reply(config => {
       let {name} = config.params;
