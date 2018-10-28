@@ -55,7 +55,7 @@ export default {
         //折叠导航栏
         collapse() {
             this.collapsed = !this.collapsed;
-            this.$emit("getcollapsed", this.collapsed);
+            this.$emit("getcollapsed", this.collapsed);//不能用驼峰命名法
         },
     },
     mounted() {

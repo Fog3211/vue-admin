@@ -3,7 +3,11 @@ import Router from 'vue-router'
 import Login from '@/views/Login'
 import NotFound from '@/views/404'
 import Home from '@/views/Home'
-import Charts from '@/views/charts/Charts'
+import Manage from '@/views/Manage'
+import Charts from '@/views/Charts'
+import UserList from '@/views/UserList'
+import Edit from '@/views/Edit'
+import Explain from '@/views/Explain'
 
 Vue.use(Router)
 
@@ -26,22 +30,39 @@ export default new Router({
       name: '主页'
     },
     {
-      path: '/',
-      component: Home,
-      name: '图表',
-      iconCls: 'fa fa-bar-chart',
+      path: '/manage',
+      component: Manage,
+      name: '',
       children: [{
-        path: '/charts',
-        component: Charts,
-        name: 'Charts'
-      }]
+          path: '/',
+          component: Home,
+          meta: ['首页'],
+        }, {
+          path: '/userlist',
+          component: UserList,
+          meta: ['用户列表'],
+        }, {
+          path: '/edit',
+          component: Edit,
+          meta: ['编辑'],
+        }, {
+          path: '/charts',
+          component: Charts,
+          meta: ['图表'],
+        },
+        {
+          path: '/explain',
+          component: Explain,
+          meta: ['说明'],
+        }
+      ]
     },
-    {
-      path: '*',
-      redirect: {
-        path: '/404'
-      },
-      hidden: true
-    }
+    // {
+    //   path: '*',
+    //   redirect: {
+    //     path: '/404'
+    //   },
+    //   hidden: true
+    // }
   ]
 })
