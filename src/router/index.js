@@ -7,7 +7,6 @@ import Manage from '@/views/Manage'
 import Charts from '@/views/Charts'
 import UserList from '@/views/UserList'
 import Edit from '@/views/Edit'
-import Explain from '@/views/Explain'
 
 Vue.use(Router)
 
@@ -49,11 +48,6 @@ export default new Router({
           path: '/charts',
           component: Charts,
           meta: ['图表'],
-        },
-        {
-          path: '/explain',
-          component: Explain,
-          meta: ['说明'],
         }
       ]
     },

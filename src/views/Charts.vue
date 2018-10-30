@@ -2,16 +2,16 @@
     <section class="chart-container">
         <el-row>
             <el-col :span="12">
-                <div id="chartRadar"></div>
+                <div id="chartRadar" class="charts charts1"></div>
             </el-col>
             <el-col :span="12">
-                <div id="chartBar"></div>
+                <div id="chartBar" class="charts charts2"></div>
             </el-col>
             <el-col :span="12">
-                <div id="chartLine"></div>
+                <div id="chartLine" class="charts"></div>
             </el-col>
             <el-col :span="12">
-                <div id="chartPie"></div>
+                <div id="chartPie" class="charts"></div>
             </el-col>
         </el-row>
     </section>
@@ -110,9 +110,9 @@ export default {
                         type: "shadow"
                     }
                 },
-                color:["#99FFCC","#FFFF00"],
+                color: ["#99FFCC", "#FFFF00"],
                 legend: {
-                    data: ["2017年", "2018年"],
+                    data: ["2017年", "2018年"]
                 },
                 grid: {
                     left: "3%",
@@ -158,7 +158,7 @@ export default {
                 tooltip: {
                     trigger: "axis"
                 },
-                 color:["#6666CC","#FF0066","#808080"],
+                color: ["#6666CC", "#FF0066", "#808080"],
                 legend: {
                     data: ["邮件营销", "联盟广告", "搜索引擎"]
                 },
@@ -218,7 +218,7 @@ export default {
                     trigger: "item",
                     formatter: "{a} <br/>{b} : {c} ({d}%)"
                 },
-                color:["#33CCFF","#FF9966","#660000","#CC00FF","#FF6600"],
+                color: ["#33CCFF", "#FF9966", "#660000", "#CC00FF", "#FF6600"],
                 legend: {
                     orient: "vertical",
                     left: "left",
@@ -275,12 +275,12 @@ export default {
 .chart-container {
     width: 100%;
     float: left;
+    margin-bottom: 30px;
 }
 
 .el-col {
     padding: 30px 20px;
-    div {
-        width: 100%;
+    .charts {
         height: 500px;
     }
 }

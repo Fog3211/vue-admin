@@ -3,7 +3,7 @@
 		<my-header @getcollapsed="showcollapsed"></my-header>
 		<div class="manage_page">
 			<el-row>
-				<el-col :span="4" class="nav">
+				<el-col :span="collapsed?4:1" class="nav">
 					<el-menu :default-active="defaultActive" router>
 						<el-menu-item index="manage"><i class="el-icon-menu"></i>首页</el-menu-item>
 						<el-submenu index="2">
@@ -22,10 +22,6 @@
 						<el-submenu index="5">
 							<template slot="title"><i class="el-icon-edit"></i>编辑</template>
 							<el-menu-item index="edit">文本编辑</el-menu-item>
-						</el-submenu>
-						<el-submenu index="6">
-							<template slot="title"><i class="el-icon-warning"></i>说明</template>
-							<el-menu-item index="explain">说明</el-menu-item>
 						</el-submenu>
 					</el-menu>
 				</el-col>
