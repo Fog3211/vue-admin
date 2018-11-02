@@ -48,52 +48,52 @@
 
         <!--编辑界面-->
         <el-dialog title="编辑" :visible.sync="editFormVisible">
-            <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
+            <el-form :model="formData" label-width="80px" :rules="formRules" ref="formData">
                 <el-form-item label="姓名" prop="name">
-                    <el-input v-model="editForm.name" auto-complete="off"></el-input>
+                    <el-input v-model="formData.name"></el-input>
                 </el-form-item>
                 <el-form-item label="性别">
-                    <el-radio-group v-model="editForm.sex">
+                    <el-radio-group v-model="formData.sex">
                         <el-radio class="radio" :label="1">男</el-radio>
                         <el-radio class="radio" :label="0">女</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item label="年龄">
-                    <el-input-number v-model="editForm.age" :min="0" :max="200"></el-input-number>
+                <el-form-item label="年龄" prop="age">
+                    <el-input-number v-model="formData.age" :min="0" :max="200"></el-input-number>
                 </el-form-item>
-                <el-form-item label="生日">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="editForm.birth"></el-date-picker>
+                <el-form-item label="生日" prop="birth">
+                    <el-date-picker type="date" placeholder="选择日期" v-model="formData.birth"></el-date-picker>
                 </el-form-item>
-                <el-form-item label="地址">
-                    <el-input type="textarea" v-model="editForm.addr"></el-input>
+                <el-form-item label="地址" prop="addr">
+                    <el-input type="textarea" v-model="formData.addr"></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click.native="editFormVisible = false">取消</el-button>
-                <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
+                <el-button @click.native.prevent="editFormVisible = false">取消</el-button>
+                <el-button type="primary" @click.native.prevent="editSubmit" :loading="editLoading">提交</el-button>
             </div>
         </el-dialog>
 
         <!--新增界面-->
         <el-dialog title="新增" :visible.sync="addFormVisible">
-            <el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm">
+            <el-form :model="formData" label-width="80px" :rules="formRules" ref="formData">
                 <el-form-item label="姓名" prop="name">
-                    <el-input v-model="addForm.name" auto-complete="off"></el-input>
+                    <el-input v-model="formData.name"></el-input>
                 </el-form-item>
                 <el-form-item label="性别">
-                    <el-radio-group v-model="addForm.sex">
+                    <el-radio-group v-model="formData.sex">
                         <el-radio class="radio" :label="1">男</el-radio>
                         <el-radio class="radio" :label="0">女</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item label="年龄">
-                    <el-input-number v-model="addForm.age" :min="0" :max="150"></el-input-number>
+                <el-form-item label="年龄" prop="age">
+                    <el-input-number v-model="formData.age" :min="0" :max="150"></el-input-number>
                 </el-form-item>
-                <el-form-item label="生日">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="addForm.birth"></el-date-picker>
+                <el-form-item label="生日" prop="birth">
+                    <el-date-picker type="date" placeholder="选择日期" v-model="formData.birth"></el-date-picker>
                 </el-form-item>
-                <el-form-item label="地址">
-                    <el-input type="textarea" v-model="addForm.addr" autosize></el-input>
+                <el-form-item label="地址" prop="addr">
+                    <el-input type="textarea" v-model="formData.addr" autosize></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -106,6 +106,7 @@
 
 <script>
 import util from "@/common/js/util";
+import {checkName,checkAddr} from "@/common/js/checkRules";
 import {
     getUserListPage,
     removeUser,
@@ -123,33 +124,26 @@ export default {
             page: 1,
             listLoading: false,
             sels: [], //列表选中列
-
             editFormVisible: false, //编辑界面是否显示
             editLoading: false,
-            editFormRules: {
+            formRules: {
                 name: [
-                    { required: true, message: "请输入姓名", trigger: "blur" }
-                ]
-            },
-            //编辑界面数据
-            editForm: {
-                id: 0,
-                name: "",
-                sex: 1,
-                age: 0,
-                birth: "",
-                addr: ""
+                    { validator: checkName, trigger: "blur" }
+                ],
+                age: [
+                    { required: true, message: "请填写年龄", trigger: "blur" }
+                ],
+                birth: [
+                    {required: true,message: "请选择出生日期",trigger: "blur"}
+                ],
+                addr: [{ validator: checkAddr, trigger: "blur" }]
             },
 
             addFormVisible: false, //新增界面是否显示
             addLoading: false,
-            addFormRules: {
-                name: [
-                    { required: true, message: "请输入姓名", trigger: "blur" }
-                ]
-            },
-            //新增界面数据
-            addForm: {
+
+            //弹窗界面数据
+            formData: {
                 name: "",
                 sex: 1,
                 age: 0,
@@ -174,12 +168,10 @@ export default {
                 name: this.name
             };
             this.listLoading = true;
-            //NProgress.start();
             getUserListPage(para).then(res => {
                 this.total = res.data.total;
                 this.users = res.data.users;
                 this.listLoading = false;
-                //NProgress.done();
             });
         },
         //删除
@@ -189,11 +181,9 @@ export default {
             })
                 .then(() => {
                     this.listLoading = true;
-                    //NProgress.start();
                     let para = { id: row.id };
                     removeUser(para).then(res => {
                         this.listLoading = false;
-                        //NProgress.done();
                         this.$message({
                             message: "删除成功",
                             type: "success"
@@ -206,12 +196,12 @@ export default {
         //显示编辑界面
         handleEdit(index, row) {
             this.editFormVisible = true;
-            this.editForm = Object.assign({}, row);
+            this.formData = Object.assign({}, row);
         },
         //显示新增界面
         handleAdd() {
             this.addFormVisible = true;
-            this.addForm = {
+            this.formData = {
                 name: "",
                 sex: 1,
                 age: 0,
@@ -221,12 +211,11 @@ export default {
         },
         //编辑
         editSubmit() {
-            this.$refs.editForm.validate(valid => {
+            this.$refs.formData.validate(valid => {
                 if (valid) {
                     this.$confirm("确认提交吗？", "提示", {}).then(() => {
                         this.editLoading = true;
-                        //NProgress.start();
-                        let para = Object.assign({}, this.editForm);
+                        let para = Object.assign({}, this.formData);
                         para.birth =
                             !para.birth || para.birth == ""
                                 ? ""
@@ -236,12 +225,11 @@ export default {
                                   );
                         editUser(para).then(res => {
                             this.editLoading = false;
-                            //NProgress.done();
                             this.$message({
                                 message: "提交成功",
                                 type: "success"
                             });
-                            this.$refs["editForm"].resetFields();
+                            this.$refs["formData"].resetFields();
                             this.editFormVisible = false;
                             this.getUsers();
                         });
@@ -251,12 +239,11 @@ export default {
         },
         //新增
         addSubmit() {
-            this.$refs.addForm.validate(valid => {
+            this.$refs.formData.validate(valid => {
                 if (valid) {
                     this.$confirm("确认提交吗？", "提示", {}).then(() => {
                         this.addLoading = true;
-                        //NProgress.start();
-                        let para = Object.assign({}, this.addForm);
+                        let para = Object.assign({}, this.formData);
                         para.birth =
                             !para.birth || para.birth == ""
                                 ? ""
@@ -266,12 +253,11 @@ export default {
                                   );
                         addUser(para).then(res => {
                             this.addLoading = false;
-                            //NProgress.done();
                             this.$message({
                                 message: "提交成功",
                                 type: "success"
                             });
-                            this.$refs["addForm"].resetFields();
+                            this.$refs["formData"].resetFields();
                             this.addFormVisible = false;
                             this.getUsers();
                         });
@@ -290,11 +276,9 @@ export default {
             })
                 .then(() => {
                     this.listLoading = true;
-                    //NProgress.start();
                     let para = { ids: ids };
                     batchRemoveUser(para).then(res => {
                         this.listLoading = false;
-                        //NProgress.done();
                         this.$message({
                             message: "删除成功",
                             type: "success"

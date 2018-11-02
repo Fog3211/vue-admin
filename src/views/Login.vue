@@ -17,28 +17,10 @@
 
 <script>
 import { requestLogin } from "../api/api";
+import {checkAccount,checkPassword} from "@/common/js/checkRules";
 
 export default {
     data() {
-        let checkAccount = (rule, value, callback) => {
-            if (value === "" || value.trim() === "") {
-                callback(new Error("请输入账号"));
-            } else {
-                callback();
-            }
-        };
-        let checkPassword = (rule, value, callback) => {
-            if (value === "" || value.trim() === "") {
-                callback(new Error("请输入密码"));
-            } else {
-                if (value.length < 6) {
-                    callback(new Error("密码不能小于6位"));
-                } else if (value.length > 16) {
-                    callback(new Error("密码不能小于16位"));
-                }
-                callback();
-            }
-        };
         return {
             logining: false,
             ruleForm: {
