@@ -4,7 +4,7 @@ const LoginUsers = [{
   username: 'admin',
   password: '123456',
   avatar: '../../../static/head.gif',
-  name: '管理员大大'
+  name: 'admin'
 }];
 
 const Users = [];

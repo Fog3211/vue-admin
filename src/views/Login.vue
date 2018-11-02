@@ -73,7 +73,7 @@ export default {
                                 "user",
                                 JSON.stringify(user)
                             );
-                            this.$router.push({ path: "/home" });
+                            this.$router.push({ path: "/manage" });
                         }
                     });
                 } else {

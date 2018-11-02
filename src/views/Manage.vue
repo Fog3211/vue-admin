@@ -4,12 +4,12 @@
         <div class="manage_page">
             <el-row>
                 <el-col :span="4" class="nav">
-                    <el-menu :default-active="defaultActive" router>
+                    <el-menu :default-active="defaultActive" router unique-opened >
                         <el-menu-item index="manage"><i class="el-icon-menu"></i>首页</el-menu-item>
                         <el-submenu index="2">
                             <template slot="title"><i class="el-icon-document"></i>数据管理</template>
                             <el-menu-item index="userList">用户列表</el-menu-item>
-                            <el-menu-item index="addGoods">用户管理</el-menu-item>
+                            <el-menu-item index="userManage">用户管理</el-menu-item>
                         </el-submenu>
                         <el-submenu index="3">
                             <template slot="title"><i class="el-icon-star-on"></i>图表</template>
@@ -52,7 +52,7 @@ export default {
     methods: {
         showcollapsed(data) {
             this.collapsed = data;
-            console.log(data);
+            // console.log(data);
         }
     }
 };
