@@ -1,22 +1,22 @@
 <template>
     <section>
-        <!--工具条-->
+        <!--头部工具条-->
         <el-col :span="24" class="toolbar">
             <el-form :inline="true">
                 <el-form-item>
                     <el-input v-model="name" placeholder="姓名"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="getUsers">查询</el-button>
+                    <el-button type="primary" @click.native.prevent="getUsers">查询</el-button>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="handleAdd">新增</el-button>
+                    <el-button type="primary" @click.native.prevent="handleAdd">新增</el-button>
                 </el-form-item>
             </el-form>
         </el-col>
 
         <!--列表-->
-        <el-table :data="users" highlight-current-row v-loading="listLoading" border stripe class="table-header" :header-cell-style="{background:'#EBEEF5'}">
+        <el-table :data="users" highlight-current-row v-loading="listLoading" border stripe class="table-header" @selection-change="selsChange" :header-cell-style="{background:'#EBEEF5'}">
             <el-table-column type="selection" width="55">
             </el-table-column>
             <el-table-column type="index" width="60">
@@ -33,16 +33,16 @@
             </el-table-column>
             <el-table-column label="操作" width="150">
                 <template slot-scope="scope">
-                    <el-button type="info" size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                    <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
+                    <el-button type="info" size="small" @click.native.prevent="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                    <el-button type="danger" size="small" @click.native.prevent="handleDel(scope.$index, scope.row)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
 
-        <!--工具条-->
+        <!--底部工具条-->
         <el-col :span="24" class="toolbar toolbar-bottom">
-            <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button>
-            <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total" style="float:right;">
+            <el-button type="danger" @click.native.prevent="batchRemove" :disabled="this.sels.length===0">批量删除</el-button>
+            <el-pagination background layout="prev, pager, next" @current-change="handleCurrentChange" @size-change="handleSizeChange" :page-size="pagesize" :total="total" class="pull-right">
             </el-pagination>
         </el-col>
 
@@ -106,7 +106,7 @@
 
 <script>
 import util from "@/common/js/util";
-import {checkName,checkAddr} from "@/common/js/checkRules";
+import { checkName, checkAddr } from "@/common/js/checkRules";
 import {
     getUserListPage,
     removeUser,
@@ -121,22 +121,25 @@ export default {
             name: "",
             users: [],
             total: 0,
-            page: 1,
+            currentpage: 1,
+            pagesize: 20,
             listLoading: false,
             sels: [], //列表选中列
             editFormVisible: false, //编辑界面是否显示
             editLoading: false,
             formRules: {
-                name: [
-                    { validator: checkName, trigger: "blur" }
-                ],
+                name: [{required: true, message: "请填写姓名", trigger: "blur"},{ validator: checkName, trigger: "blur" }],
                 age: [
                     { required: true, message: "请填写年龄", trigger: "blur" }
                 ],
                 birth: [
-                    {required: true,message: "请选择出生日期",trigger: "blur"}
+                    {
+                        required: true,
+                        message: "请选择出生日期",
+                        trigger: "blur"
+                    }
                 ],
-                addr: [{ validator: checkAddr, trigger: "blur" }]
+                addr: [{required: true, message: "请填写地址", trigger: "blur"},{ validator: checkAddr, trigger: "blur" }]
             },
 
             addFormVisible: false, //新增界面是否显示
@@ -154,17 +157,20 @@ export default {
     },
     methods: {
         //性别显示转换
-        formatSex: function(row) {
+        formatSex(row) {
             return row.sex == 1 ? "男" : "女";
         },
         handleCurrentChange(val) {
-            this.page = val;
+            this.currentpage = val;
             this.getUsers();
+        },
+        handleSizeChange(val) {
+            this.pagesize = val;
         },
         //获取用户列表
         getUsers() {
             let para = {
-                page: this.page,
+                page: this.currentpage,
                 name: this.name
             };
             this.listLoading = true;
@@ -179,19 +185,25 @@ export default {
             this.$confirm("确认删除该记录吗?", "提示", {
                 type: "warning"
             })
-                .then(() => {
+                .then(res => {
                     this.listLoading = true;
                     let para = { id: row.id };
-                    removeUser(para).then(res => {
-                        this.listLoading = false;
-                        this.$message({
-                            message: "删除成功",
-                            type: "success"
+                    removeUser(para)
+                        .then(res => {
+                            this.listLoading = false;
+                            this.$message({
+                                message: "删除成功",
+                                type: "success"
+                            });
+                            this.getUsers();
+                        })
+                        .catch(error => {
+                            console.log(error);
                         });
-                        this.getUsers();
-                    });
                 })
-                .catch(() => {});
+                .catch(error => {
+                    console.log(error);
+                });
         },
         //显示编辑界面
         handleEdit(index, row) {
@@ -213,7 +225,7 @@ export default {
         editSubmit() {
             this.$refs.formData.validate(valid => {
                 if (valid) {
-                    this.$confirm("确认提交吗？", "提示", {}).then(() => {
+                    this.$confirm("确认提交吗？", "提示", {}).then(res => {
                         this.editLoading = true;
                         let para = Object.assign({}, this.formData);
                         para.birth =
@@ -241,7 +253,7 @@ export default {
         addSubmit() {
             this.$refs.formData.validate(valid => {
                 if (valid) {
-                    this.$confirm("确认提交吗？", "提示", {}).then(() => {
+                    this.$confirm("确认提交吗？", "提示", {}).then(res => {
                         this.addLoading = true;
                         let para = Object.assign({}, this.formData);
                         para.birth =
@@ -265,16 +277,16 @@ export default {
                 }
             });
         },
-        selsChange(sels) {
-            this.sels = sels;
+        selsChange(val) {
+            this.sels = val;
         },
         //批量删除
         batchRemove() {
-            var ids = this.sels.map(item => item.id).toString();
+            let ids = this.sels.map(item => item.id).toString();
             this.$confirm("确认删除选中记录吗？", "提示", {
                 type: "warning"
             })
-                .then(() => {
+                .then(res => {
                     this.listLoading = true;
                     let para = { ids: ids };
                     batchRemoveUser(para).then(res => {
@@ -286,8 +298,8 @@ export default {
                         this.getUsers();
                     });
                 })
-                .catch(() => {
-                    console.log("error");
+                .catch(error => {
+                    console.log(error);
                 });
         }
     },
@@ -310,5 +322,8 @@ export default {
 .table-header {
     width: 100%;
     margin-left: 10px;
+}
+.pull-right{
+    float:right;
 }
 </style>
