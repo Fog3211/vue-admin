@@ -1,5 +1,5 @@
 // login
-let checkAccount = (rule, value, callback) => {
+const checkAccount = (rule, value, callback) => {
     if (value === "" || value.trim() === "") {
         callback(new Error("请输入账号"));
     } else {
@@ -7,7 +7,7 @@ let checkAccount = (rule, value, callback) => {
     }
 };
        
-let checkPassword = (rule, value, callback) => {
+const checkPassword = (rule, value, callback) => {
     if (value === "" || value.trim() === "") {
         callback(new Error("请输入密码"));
     } else {
@@ -21,7 +21,7 @@ let checkPassword = (rule, value, callback) => {
 };
 
 // UserManage
-let checkName = (rule, value, callback) => {
+const checkName = (rule, value, callback) => {
     if (value === "" || value.trim() === "") {
         return callback(new Error("请填写姓名"));
     } else {
@@ -32,7 +32,7 @@ let checkName = (rule, value, callback) => {
         }
     }
 };
-let checkAddr = (rule, value, callback) => {
+const checkAddr = (rule, value, callback) => {
     if (value === "" || value.trim() === "") {
         return callback(new Error("请填写地址"));
     } else {

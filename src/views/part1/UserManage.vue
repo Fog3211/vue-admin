@@ -16,7 +16,7 @@
         </el-col>
 
         <!--列表-->
-        <el-table :data="users" highlight-current-row v-loading="listLoading" border stripe class="table-header" @selection-change="selsChange" :header-cell-style="{background:'#EBEEF5'}">
+        <el-table :data="users" highlight-current-row v-loading="listLoading" border stripe class="table" @selection-change="selsChange" :header-cell-style="{background:'#EBEEF5'}">
             <el-table-column type="selection" width="55">
             </el-table-column>
             <el-table-column type="index" width="60">
@@ -319,10 +319,7 @@ export default {
     padding: 10px;
     margin-bottom: 60px;
 }
-.table-header {
-    width: 100%;
-    margin-left: 10px;
-}
+
 .pull-right {
     float: right;
 }
