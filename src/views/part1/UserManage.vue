@@ -128,7 +128,10 @@ export default {
             editFormVisible: false, //编辑界面是否显示
             editLoading: false,
             formRules: {
-                name: [{required: true, message: "请填写姓名", trigger: "blur"},{ validator: checkName, trigger: "blur" }],
+                name: [
+                    { required: true, message: "请填写姓名", trigger: "blur" },
+                    { validator: checkName, trigger: "blur" }
+                ],
                 age: [
                     { required: true, message: "请填写年龄", trigger: "blur" }
                 ],
@@ -139,7 +142,10 @@ export default {
                         trigger: "blur"
                     }
                 ],
-                addr: [{required: true, message: "请填写地址", trigger: "blur"},{ validator: checkAddr, trigger: "blur" }]
+                addr: [
+                    { required: true, message: "请填写地址", trigger: "blur" },
+                    { validator: checkAddr, trigger: "blur" }
+                ]
             },
 
             addFormVisible: false, //新增界面是否显示
@@ -228,13 +234,10 @@ export default {
                     this.$confirm("确认提交吗？", "提示", {}).then(res => {
                         this.editLoading = true;
                         let para = Object.assign({}, this.formData);
-                        para.birth =
-                            !para.birth || para.birth == ""
-                                ? ""
-                                : util.formatDate.format(
-                                      new Date(para.birth),
-                                      "yyyy-MM-dd"
-                                  );
+                        para.birth = util.formatDate.format(
+                            new Date(para.birth),
+                            "yyyy-MM-dd"
+                        );
                         editUser(para).then(res => {
                             this.editLoading = false;
                             this.$message({
@@ -256,13 +259,10 @@ export default {
                     this.$confirm("确认提交吗？", "提示", {}).then(res => {
                         this.addLoading = true;
                         let para = Object.assign({}, this.formData);
-                        para.birth =
-                            !para.birth || para.birth == ""
-                                ? ""
-                                : util.formatDate.format(
-                                      new Date(para.birth),
-                                      "yyyy-MM-dd"
-                                  );
+                        para.birth = util.formatDate.format(
+                            new Date(para.birth),
+                            "yyyy-MM-dd"
+                        );
                         addUser(para).then(res => {
                             this.addLoading = false;
                             this.$message({
@@ -323,7 +323,7 @@ export default {
     width: 100%;
     margin-left: 10px;
 }
-.pull-right{
-    float:right;
+.pull-right {
+    float: right;
 }
 </style>

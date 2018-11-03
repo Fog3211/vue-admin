@@ -1,9 +1,9 @@
-var SIGN_REGEXP = /([yMdhsm])(\1*)/g;
-var DEFAULT_PATTERN = 'yyyy-MM-dd';
+let SIGN_REGEXP = /([yMdhsm])(\1*)/g;
+let DEFAULT_PATTERN = 'yyyy-MM-dd';
 
 function padding(s, len) {
-    var len = len - (s + '').length;
-    for (var i = 0; i < len; i++) {
+    let l = len - (s + '').length;
+    for (let i = 0; i < l; i++) {
         s = '0' + s;
     }
     return s;
@@ -11,9 +11,9 @@ function padding(s, len) {
 
 export default {
     getQueryStringByName: function (name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-        var r = window.location.search.substr(1).match(reg);
-        var context = "";
+        let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        let r = window.location.search.substr(1).match(reg);
+        let context = "";
         if (r != null)
             context = r[2];
         reg = null;
@@ -43,13 +43,13 @@ export default {
             });
         },
         parse(dateString, pattern) {
-            var matchs1 = pattern.match(SIGN_REGEXP);
-            var matchs2 = dateString.match(/(\d)+/g);
+            let matchs1 = pattern.match(SIGN_REGEXP);
+            let matchs2 = dateString.match(/(\d)+/g);
             if (matchs1.length == matchs2.length) {
-                var _date = new Date(1970, 0, 1);
-                for (var i = 0; i < matchs1.length; i++) {
-                    var _int = parseInt(matchs2[i]);
-                    var sign = matchs1[i];
+                let _date = new Date(1970, 0, 1);
+                for (let i = 0; i < matchs1.length; i++) {
+                    let _int = parseInt(matchs2[i]);
+                    let sign = matchs1[i];
                     switch (sign.charAt(0)) {
                         case 'y':
                             _date.setFullYear(_int);

@@ -53,12 +53,12 @@ export default new Router({
         }
       ]
     },
-    // {
-    //   path: '*',
-    //   redirect: {
-    //     path: '/404'
-    //   },
-    //   hidden: true
-    // }
+    {
+      path: '*',
+      redirect: {
+        path: '/404'
+      },
+      hidden: true
+    }
   ]
 })

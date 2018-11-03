@@ -102,14 +102,14 @@ export default {
 
     //编辑用户
     mock.onGet('/user/edit').reply(config => {
-      let { id, name, addr, age, birth, sex } = config.params;
+      let { id, name, sex, age, birth, addr} = config.params;
       _Users.some(u => {
         if (u.id === id) {
           u.name = name;
-          u.addr = addr;
+          u.sex = sex;
           u.age = age;
           u.birth = birth;
-          u.sex = sex;
+          u.addr = addr;
           return true;
         }
       });
@@ -125,13 +125,13 @@ export default {
 
     //新增用户
     mock.onGet('/user/add').reply(config => {
-      let { name, addr, age, birth, sex } = config.params;
+      let { name, sex , age, birth, addr} = config.params;
       _Users.push({
         name: name,
-        addr: addr,
+        sex: sex,
         age: age,
         birth: birth,
-        sex: sex
+        addr: addr
       });
       return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -142,6 +142,5 @@ export default {
         }, 500);
       });
     });
-
   }
 };
