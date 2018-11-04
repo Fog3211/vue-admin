@@ -21,7 +21,7 @@
 <script>
 import { requestLogin } from "../api/api";
 import { checkAccount, checkPassword } from "@/common/js/checkRules";
-import loginBg from "@/common/js/loginBg";
+import loginBg from "@/common/js/loginCanvas";
 
 export default {
     data() {

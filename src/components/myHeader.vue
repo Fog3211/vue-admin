@@ -40,17 +40,12 @@
 
 <script>
 import generateColors from "@/common/js/color";
+import changeTheme from "@/common/js/changeTheme";
+import { colorValidator } from "@/common/js/checkRules";
+
 export default {
     data() {
-        const colorValidator = (rule, value, callback) => {
-            if (!value) {
-                return callback(new Error("主题色不能为空"));
-            } else if (!/^#[\dabcdef]{6}$/i.test(value)) {
-                return callback(new Error("请输入 hex 格式的主题色"));
-            } else {
-                callback();
-            }
-        };
+       
         return {
             sysName: "Vue-Admin",
             collapsed: false,
@@ -95,6 +90,7 @@ export default {
         showThemeDialog() {
             this.themeDialogVisible = true;
         },
+        // 更改主题
         writeNewStyle() {
             //  console.log(this.colors.primary)
             let cssText = this.originalStyle;
@@ -113,6 +109,7 @@ export default {
                 document.head.lastChild.innerText = cssText;
             }
         },
+        // 提交颜色
         submitForm() {
             this.$refs.form.validate(valid => {
                 if (valid) {
@@ -129,59 +126,18 @@ export default {
                 }
             });
         },
+        // 重置颜色
         resetForm() {
             this.$refs.form.resetFields();
         },
 
         getIndexStyle() {
-            this.getFile(
+            changeTheme.getFile(
                 "//unpkg.com/element-ui/lib/theme-chalk/index.css"
             ).then(({ data }) => {
-                this.originalStyle = this.getStyleTemplate(data);
+                this.originalStyle = changeTheme.getStyleTemplate(data);
             });
         },
-        getStyleTemplate(data) {
-            const colorMap = {
-                "#3a8ee6": "shade-1",
-                "#409eff": "primary",
-                "#53a8ff": "light-1",
-                "#66b1ff": "light-2",
-                "#79bbff": "light-3",
-                "#8cc5ff": "light-4",
-                "#a0cfff": "light-5",
-                "#b3d8ff": "light-6",
-                "#c6e2ff": "light-7",
-                "#d9ecff": "light-8",
-                "#ecf5ff": "light-9"
-            };
-            Object.keys(colorMap).forEach(key => {
-                const value = colorMap[key];
-                data = data.replace(new RegExp(key, "ig"), value);
-            });
-            return data;
-        },
-        getFile(url, isBlob = false) {
-            return new Promise((resolve, reject) => {
-                const client = new XMLHttpRequest();
-                client.responseType = isBlob ? "blob" : "";
-                client.onreadystatechange = () => {
-                    if (client.readyState !== 4) {
-                        return;
-                    }
-                    if (client.status === 200) {
-                        const urlArr = client.responseURL.split("/");
-                        resolve({
-                            data: client.response,
-                            url: urlArr[urlArr.length - 1]
-                        });
-                    } else {
-                        reject(new Error(client.statusText));
-                    }
-                };
-                client.open("GET", url);
-                client.send();
-            });
-        }
     },
     mounted() {
         let user = sessionStorage.getItem("user");

@@ -9,6 +9,6 @@ const generateColors = primary => {
     colors[key] = color.convert(value)
   })
   return colors
-}
+};
 
 export default generateColors

@@ -43,9 +43,21 @@ const checkAddr = (rule, value, callback) => {
         }
     }
 };
+// color
+const colorValidator = (rule, value, callback) => {
+    if (!value) {
+        return callback(new Error("主题色不能为空"));
+    } else if (!/^#[\dabcdef]{6}$/i.test(value)) {
+        return callback(new Error("请输入 hex 格式的主题色"));
+    } else {
+        callback();
+    }
+};
+
 export {
     checkAccount,
     checkPassword,
     checkName,
-    checkAddr
+    checkAddr,
+    colorValidator
 }
