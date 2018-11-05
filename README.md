@@ -1,10 +1,14 @@
 # vue-admin
 
-> A Vue.js project
+> 基于vue.js+mock开发的后台管理系统
+>
+> 技术栈：vue+vue-router+mock.js+Element-UI+sass+ES6+axios+ECharts
+
+演示地址(http://fog3211.com/vue-admin/dist/index.html)  
 
 ## Build Setup
 
-``` bash
+```bash
 # install dependencies
 npm install
 
