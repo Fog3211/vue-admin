@@ -14,7 +14,7 @@ for (let i = 0; i < 100; i++) {
     name: Mock.mock('@cname'),
     id: Mock.mock('@guid'),
     addr: Mock.mock('@county(true)'),
-    age: Mock.mock('@integer(18,60)'),
+    age: Mock.mock('@integer(1,60)'),
     birth: Mock.mock('@date'),
     sex: Mock.mock('@integer(0,1)'),
   });

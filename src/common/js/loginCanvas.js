@@ -1,5 +1,5 @@
 export default {
-    canvasInit: function () {
+    canvasInit () {
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
     var cw = canvas.width = window.innerWidth,

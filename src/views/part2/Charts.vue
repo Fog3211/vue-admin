@@ -18,6 +18,7 @@
 </template>
 <script>
 import echarts from "echarts";
+import { getUserList } from "@/api/api";
 
 export default {
     data() {
@@ -25,23 +26,58 @@ export default {
             chartRadar: null,
             chartBar: null,
             chartLine: null,
-            chartPie: null
+            chartPie: null,
+            mockData: [],
+            chartsData1: {
+                male: new Array(6).fill(0),
+                female: new Array(6).fill(0)
+            }
         };
     },
-
     methods: {
+        getData() {
+            let para = {
+                name: ""
+            };
+            getUserList(para)
+                .then(res => {
+                    this.mockData = res.data.users;
+                })
+                .then(() => {
+                    this.drawCharts();
+                });
+        },
+        handleData1() {
+            this.mockData.forEach(item => {
+                if (item.sex === 1) {
+                    if (item.age > 0 && item.age <= 50)
+                        this.chartsData1.male[Math.floor(item.age / 10)]++;
+                    else {
+                        this.chartsData1.male[5]++;
+                    }
+                } else {
+                    if (item.age > 0 && item.age <= 50)
+                        this.chartsData1.female[Math.floor(item.age / 10)]++;
+                    else {
+                        this.chartsData1.female[5]++;
+                    }
+                }
+            });
+            // console.log(this.chartsData1);
+        },
         drawRadarChart() {
+            this.handleData1();
             this.chartRadar = echarts.init(
                 document.getElementById("chartRadar")
             );
             this.chartRadar.setOption({
                 title: {
                     text: "Radar Chart",
-                    subtext: "数据来自网络"
+                    subtext: "数据由mock生成"
                 },
                 tooltip: {},
                 legend: {
-                    data: ["预算分配", "实际开销"]
+                    data: ["男", "女"]
                 },
                 radar: {
                     shape: "circle",
@@ -54,43 +90,26 @@ export default {
                         }
                     },
                     indicator: [
-                        { name: "销售", max: 6500 },
-                        { name: "管理", max: 16000 },
-                        {
-                            name: "信息技术",
-                            max: 30000
-                        },
-                        { name: "客服", max: 38000 },
-                        { name: "研发", max: 52000 },
-                        { name: "市场", max: 25000 }
+                        { name: "0~10岁", max: 15 },
+                        { name: "10~20岁", max: 15 },
+                        { name: "20~30岁", max: 15 },
+                        { name: "30~40岁", max: 15 },
+                        { name: "40~50岁", max: 15 },
+                        { name: "60岁以上", max: 15 }
                     ]
                 },
                 series: [
                     {
-                        name: "预算 vs 开销",
+                        name: "男女比例",
                         type: "radar",
                         data: [
                             {
-                                value: [
-                                    4300,
-                                    10000,
-                                    28000,
-                                    35000,
-                                    50000,
-                                    19000
-                                ],
-                                name: "预算分配"
+                                value: this.chartsData1.male,
+                                name: "男"
                             },
                             {
-                                value: [
-                                    5000,
-                                    14000,
-                                    28000,
-                                    31000,
-                                    42000,
-                                    21000
-                                ],
-                                name: "实际开销"
+                                value: this.chartsData1.female,
+                                name: "女"
                             }
                         ]
                     }
@@ -261,12 +280,13 @@ export default {
             this.drawPieChart();
         }
     },
-
-    mounted: function() {
-        this.drawCharts();
+    mounted() {
+        // this.drawCharts();
+        this.getData();
     },
-    updated: function() {
-        this.drawCharts();
+    updated() {
+        this.getData();
+        // this.drawCharts();
     }
 };
 </script>

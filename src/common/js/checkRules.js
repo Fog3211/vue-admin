@@ -43,6 +43,16 @@ const checkAddr = (rule, value, callback) => {
         }
     }
 };
+const checkAge = (rule, value, callback) => {
+   
+        if (value > 150) {
+            callback(new Error("年龄不能大于150"));
+        }else if(value < 0){
+            callback(new Error("年龄不能小于0"));
+        }else {
+            callback();
+        }
+};
 // color
 const colorValidator = (rule, value, callback) => {
     if (!value) {
@@ -59,5 +69,6 @@ export {
     checkPassword,
     checkName,
     checkAddr,
+    checkAge,
     colorValidator
 }

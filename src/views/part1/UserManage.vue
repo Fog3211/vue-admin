@@ -106,7 +106,7 @@
 
 <script>
 import util from "@/common/js/util";
-import { checkName, checkAddr } from "@/common/js/checkRules";
+import { checkName, checkAddr, checkAge } from "@/common/js/checkRules";
 import {
     getUserListPage,
     removeUser,
@@ -133,7 +133,8 @@ export default {
                     { validator: checkName, trigger: "blur" }
                 ],
                 age: [
-                    { required: true, message: "请填写年龄", trigger: "blur" }
+                    { required: true, message: "请填写年龄", trigger: "blur" },
+                    { validator: checkAge, trigger: "blur" }
                 ],
                 birth: [
                     {

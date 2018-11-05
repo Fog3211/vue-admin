@@ -42,19 +42,19 @@
 import generateColors from "@/common/js/color";
 import changeTheme from "@/common/js/changeTheme";
 import { colorValidator } from "@/common/js/checkRules";
+let originalColor = "#409eff";
 
 export default {
     data() {
-       
         return {
             sysName: "Vue-Admin",
             collapsed: false,
             sysUserName: "",
             sysUserAvatar: "",
             colors: {
-                primary: "#409eff"
+                primary: originalColor
             },
-            primaryColor: "#409eff",
+            primaryColor: originalColor,
             themeDialogVisible: false,
             originalStyle: "",
             originalStylesheetCount: -1,
@@ -63,24 +63,26 @@ export default {
             }
         };
     },
-    created() {
-        this.getIndexStyle();
-    },
     methods: {
         //退出登录
         logout() {
             let _this = this;
             this.$confirm("确认退出吗?", "提示", {
                 type: "warning"
-            })
-                .then(() => {
-                    //   console.log('logout');
-                    sessionStorage.removeItem("user");
-                    _this.$router.push("/login");
-                })
-                .catch(() => {
-                    console.log("error");
-                });
+            }).then(() => {
+                
+                this.colors.primary = originalColor;
+                this.primaryColor = originalColor;
+                this.colors = Object.assign(
+                    {},
+                    this.colors,
+                    generateColors(this.colors.primary)
+                );
+                this.writeNewStyle();
+
+                sessionStorage.removeItem("user");
+                _this.$router.push("/login");
+            });
         },
         //折叠导航栏
         collapse() {
@@ -126,18 +128,21 @@ export default {
                 }
             });
         },
-        // 重置颜色
+        // 重置颜色选择
         resetForm() {
             this.$refs.form.resetFields();
         },
 
         getIndexStyle() {
-            changeTheme.getFile(
-                "//unpkg.com/element-ui/lib/theme-chalk/index.css"
-            ).then(({ data }) => {
-                this.originalStyle = changeTheme.getStyleTemplate(data);
-            });
-        },
+            changeTheme
+                .getFile("//unpkg.com/element-ui/lib/theme-chalk/index.css")
+                .then(({ data }) => {
+                    this.originalStyle = changeTheme.getStyleTemplate(data);
+                });
+        }
+    },
+    created() {
+        this.getIndexStyle();
     },
     mounted() {
         let user = sessionStorage.getItem("user");
@@ -149,6 +154,7 @@ export default {
 
         this.$nextTick(() => {
             this.originalStylesheetCount = document.styleSheets.length;
+            // console.log(themeColor);
         });
     }
 };

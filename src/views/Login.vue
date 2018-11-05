@@ -21,7 +21,7 @@
 <script>
 import { requestLogin } from "../api/api";
 import { checkAccount, checkPassword } from "@/common/js/checkRules";
-import loginBg from "@/common/js/loginCanvas";
+import loginCanvas from "@/common/js/loginCanvas";
 
 export default {
     data() {
@@ -55,10 +55,7 @@ export default {
                             this.$message({ message: msg, type: "error" });
                         } else {
                             //  console.log("session!!");
-                            sessionStorage.setItem(
-                                "user",
-                                JSON.stringify(user)
-                            );
+                            sessionStorage.setItem("user",JSON.stringify(user));
                             this.$router.push({ path: "/manage" });
                         }
                     });
@@ -70,7 +67,7 @@ export default {
         }
     },
     mounted() {
-        loginBg.canvasInit();
+        loginCanvas.canvasInit();
     }
 };
 </script>

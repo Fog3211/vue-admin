@@ -2,6 +2,7 @@ import color from 'css-color-function'
 import formula from './formula.json'
 
 const generateColors = primary => {
+  
   let colors = {}
 
   Object.keys(formula).forEach(key => {
