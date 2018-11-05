@@ -71,6 +71,7 @@ export default {
         .el-row {
             height: 100%;
             .nav {
+                border: 1px solid #ccc;
                 height: 100%;
                 .el-menu {
                     min-height: 100%;

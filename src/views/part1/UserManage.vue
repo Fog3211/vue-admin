@@ -65,7 +65,7 @@
                     <el-date-picker type="date" placeholder="选择日期" v-model="formData.birth"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="地址" prop="addr">
-                    <el-input type="textarea" v-model="formData.addr"></el-input>
+                    <el-input type="textarea" v-model="formData.addr" autosize></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
