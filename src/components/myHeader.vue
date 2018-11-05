@@ -60,7 +60,7 @@ export default {
             originalStylesheetCount: -1,
             rules: {
                 primary: [{ validator: colorValidator, trigger: "blur" }]
-            }
+            },
         };
     },
     methods: {
@@ -70,7 +70,6 @@ export default {
             this.$confirm("确认退出吗?", "提示", {
                 type: "warning"
             }).then(() => {
-                
                 this.colors.primary = originalColor;
                 this.primaryColor = originalColor;
                 this.colors = Object.assign(
@@ -135,11 +134,13 @@ export default {
 
         getIndexStyle() {
             changeTheme
-                .getFile("//unpkg.com/element-ui/lib/theme-chalk/index.css")
+                .getFile(
+                    "https://unpkg.com/element-ui@2.4.9/lib/theme-chalk/index.css"
+                )
                 .then(({ data }) => {
                     this.originalStyle = changeTheme.getStyleTemplate(data);
                 });
-        }
+        },
     },
     created() {
         this.getIndexStyle();
