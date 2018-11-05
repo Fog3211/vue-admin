@@ -33,23 +33,28 @@ export default new Router({
           path: '/',
           component: Home,
           meta: ['首页'],
+          name: '首页'
         }, {
           path: '/userlist',
           component: UserList,
           meta: ['用户列表'],
+          name: '用户列表'
         },
         {
           path: '/userManage',
           component: UserManage,
           meta: ['用户管理'],
+          name: '用户管理'
         }, {
           path: '/edit',
           component: Edit,
-          meta: ['编辑'],
+          meta: ['文本编辑'],
+          name: '文本编辑'
         }, {
           path: '/charts',
           component: Charts,
           meta: ['图表'],
+          name: '图表'
         }
       ]
     },

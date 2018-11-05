@@ -3,7 +3,7 @@
         <el-header :style="{ 'background-color': primaryColor }">
             <el-row>
                 <el-col :span="4" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'">
-                    {{collapsed?'':sysName}}
+                    {{sysName}}
                 </el-col>
                 <el-col :span="10">
                     <div class="tools" @click="collapse">
@@ -17,7 +17,7 @@
                         </span>
                         <el-dropdown-menu slot="dropdown">
                             <el-dropdown-item>我的消息</el-dropdown-item>
-                            <el-dropdown-item @click.native.prevent="showThemeDialog">切换主题色</el-dropdown-item>
+                            <el-dropdown-item @click.native.prevent="showThemeDialog">切换主题</el-dropdown-item>
                             <el-dropdown-item divided @click.native.prevent="logout">退出登录</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
@@ -60,7 +60,7 @@ export default {
             originalStylesheetCount: -1,
             rules: {
                 primary: [{ validator: colorValidator, trigger: "blur" }]
-            },
+            }
         };
     },
     methods: {
@@ -140,7 +140,7 @@ export default {
                 .then(({ data }) => {
                     this.originalStyle = changeTheme.getStyleTemplate(data);
                 });
-        },
+        }
     },
     created() {
         this.getIndexStyle();
@@ -177,10 +177,12 @@ export default {
             padding-right: 20px;
         }
         .logo-width {
-            width: 230px;
+            width: 210px;
         }
         .logo-collapse-width {
-            width: 60px;
+            font-size: 14px;
+            padding:0  0  0 10px;
+            width: 100px;
         }
         .tools {
             padding: 0px 23px;
