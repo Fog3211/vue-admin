@@ -2,10 +2,13 @@
     <el-container>
         <el-header :style="{ 'background-color': primaryColor }">
             <el-row>
-                <el-col :span="4" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'">
+                <el-col :span="1">
+                    <i class="fa fa-diamond large"></i>
+                </el-col>
+                <el-col :span="2" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'" v-show="!collapsed">
                     {{sysName}}
                 </el-col>
-                <el-col :span="10">
+                <el-col :span="11">
                     <div class="tools" @click="collapse">
                         <i class="fa fa-align-justify middle"></i>
                     </div>
@@ -177,15 +180,14 @@ export default {
             padding-right: 20px;
         }
         .logo-width {
-            width: 210px;
+            width: 170px;
         }
         .logo-collapse-width {
-            font-size: 14px;
-            padding:0  0  0 10px;
-            width: 100px;
+            padding: 0 0 0 10px;
+            width: 80px;
         }
         .tools {
-            padding: 0px 23px;
+            padding-right:23px;
             width: 14px;
             height: 60px;
             font-size: 26px;
