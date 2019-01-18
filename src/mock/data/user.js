@@ -3,7 +3,7 @@ const LoginUsers = [{
   id: 1,
   username: 'admin',
   password: '123456',
-  avatar: 'http://t1.aixinxi.net/o_1crhd7j311kgb1bif4sd100d1q9da.gif-j.jpg',
+  avatar: 'http://plavm6yij.bkt.clouddn.com/head.gif',
   name: 'admin'
 }];
 
