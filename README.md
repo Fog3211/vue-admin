@@ -4,7 +4,7 @@
 >
 > 技术栈：vue+vue-router+mock.js+Element-UI+sass+ES6+axios+ECharts
 
-- [演示传送门](http://fog3211.github.io/vue-admin/dist/index.html)  
+- [演示传送门](https://site.fog3211.com/vue-admin/index.html)  
 
 ## Build Setup
 
